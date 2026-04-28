@@ -1,15 +1,10 @@
-﻿using System.Collections;
-using System.Reflection.Metadata;
-using System.Runtime.Intrinsics.Arm;
-using System.Xml.Linq;
-
-namespace RPG_Asn4
+﻿namespace RPG_Asn4
 {
     internal class Program
     {
         //You will need to create a Game class and a Player class. Game will handle an instance of
-        //Player.Game will provide a method to save the Player class to a json file.When the program
-        //starts, it should prompt for a name.If that name already has a file it should, read it in
+        //Player.Game will provide a method to save the Player class to a json file. When the program
+        //starts, it should prompt for a name. If that name already has a file it should, read it in
         //and print out all the values stored in Player.If it does not exist it should create the file
         //and then save it as it's own file. The program should then exit.
 
@@ -20,8 +15,9 @@ namespace RPG_Asn4
             while (true)
             {
                 Display.TopMenu();
-                switch (TakeInput.GetMenuChoice()) 
-                {case 1:
+                switch (TakeInput.GetMenuChoice())
+                {
+                    case 1:
                         g.CreatePlayer();
                         break;
                     case 2:

@@ -6,8 +6,9 @@ namespace RPG_Asn4
 {
     public class Player : Actor
     {
-        public Player(string name) : base(name)
+        public Player(string name, int health) : base(name, health)
         {
+
         }
     }
 }
