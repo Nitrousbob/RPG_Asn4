@@ -21,7 +21,7 @@
 
             while (interacting)
             {
-                if (targets.Count == 0)
+                if (targets.Count == 0)  
                 {
                     Display.Igm("There is nothing to interact with.");
                     return;
@@ -34,13 +34,13 @@
                     Display.List($"{i + 1}. {targets[i].Name}"); //This lists the interactable targets by their type (e.g., Npc, Item, etc.)
                 }
                 int exitOption = targets.Count + 1;
-                Display.Igm($"{exitOption}. Exit Interaction");
+                Display.Igm($"{exitOption}. Back to Main Menu.");
                 int choice = TakeInput.PromptIntRange("Select an option to interact with: ", 1, exitOption);
 
                 if (choice == exitOption)
                 {
                     interacting = false;
-                    Display.Igm("You step back from the interaction.");
+                    Display.Igm("\nYou step back from the interaction.");
                 }
                 else if (choice > 0 && choice <= targets.Count)
                 {

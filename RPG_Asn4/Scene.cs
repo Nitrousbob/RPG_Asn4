@@ -15,7 +15,7 @@
         {
             Display.Igm(Description);
             InteractionHandler.InteractWith(Locals);
-            InteractionHandler.HandleSelection(Locals);
+            //InteractionHandler.HandleSelection(Locals);
         }
 
         //define a starting scene with a description and some npcs to interact with
