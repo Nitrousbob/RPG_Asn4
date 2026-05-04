@@ -4,30 +4,90 @@ namespace RPG_Asn4
 {
     public class Game
     {
-        private const int StartingHealth = 20;
-        private Player player = new("", StartingHealth);
+        public enum GameState
+        {
+            MainMenu,
+            Playing,
+            Exit,
+        }
+        
+        private GameState currentState;
+        private const int StartingHealth = 20;  //start player with 20 health
+        private Player? player;  //this is a nullable type, so it can be
+        public bool isPlayerLoaded => player != null;
         private string path = AppDomain.CurrentDomain.BaseDirectory;  //this will put it in the same directory as executable, which is probably the bin/Debug/net10.0 folder
         public Game()
         {
-
+            currentState = GameState.MainMenu;
         }
 
-        public void StartGame()
+        public void Run()
         {
+            Display.ShowWelcomeMessage();
+            while (currentState != GameState.Exit)
+            {
+                switch (currentState)
+                {
+                    case GameState.MainMenu:
+                        ShowMainMenu();
+                        break;
+                    case GameState.Playing:
+                    PlayGame();
+                        break;
+                }
+            }
+            Display.Igm("\nThanks for playing!");
+        }
+
+        private void ShowMainMenu()
+        {
+            Display.ShowMenuChoices(new string[] { "Create Character", "Load Character", "Start Game", "Exit" });
+            switch (TakeInput.PromptIntRange("Please select an option: ", 1, 4))
+            {
+                case 1:
+                    CreatePlayer();
+                    break;
+                case 2:
+                    LoadPlayer();
+                    break;
+                case 3:
+                    if (isPlayerLoaded)
+                    {
+                        currentState = GameState.Playing;
+                    }
+                    else
+                    {
+                        Display.Error("You must create or load a character before you start.");
+                    }
+                    break;
+                case 4:
+                    currentState = GameState.Exit;
+                    break;
+            }
+        }
+
+        private void PlayGame()
+        {
+            Display.Igm("\n--- Entering Game World ---");
+
             //make a couple Npcs to interact with in the starting area
             List<IInteractable> startNpcs = new List<IInteractable>
             {
                 new Npc("Old Man", 10),
                 new Npc("Merchant", 5)
             };
-
             //Initialize the starting scene
             Scene startArea = new Scene(
                 "\nYou find yourself in a small clearing surrounded by dense forest.",
                 startNpcs
             );
-
             startArea.Describe();
+
+            // For now, we return to the main menu after the scene is done.
+            currentState = GameState.MainMenu;
+            Display.Igm("\n--- Returning to the Main Menu ---");
+            Console.WriteLine("\nPress any key to continue...");
+            Console.ReadLine();
         }
 
         public void CreatePlayer()
@@ -69,7 +129,7 @@ namespace RPG_Asn4
                 Display.List($"{i + 1}. {Path.GetFileNameWithoutExtension(files[i])}"); //This lists the available saved player files by their names (without the .json extension).
             }
 
-            int choice = TakeInput.PromptIntInstant("Enter the number of the player you want to load: ", Enumerable.Range(1, files.Length).ToArray());
+            int choice = TakeInput.PromptIntRange("Enter the number of the player you want to load: ", 1, files.Length);
 
                 string selectedFile = files[choice - 1]; //This gets the file path of the selected player based on the user's input.
 

@@ -2,19 +2,6 @@
 {
     public static class InteractionHandler
     {
-        public static void HandleSelection(List<IInteractable> targets)
-        {
-            if (targets.Count == 0) return;
-
-            int choice = TakeInput.GetMenuChoice();
-
-            if (choice > 0 && choice <= targets.Count)
-            {
-                targets[choice - 1].OnInteract();
-            }
-
-        }
-
         public static void InteractWith(List<IInteractable> targets)
         {
             bool interacting = true;

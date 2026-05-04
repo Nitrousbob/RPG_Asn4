@@ -87,8 +87,18 @@ namespace RPG_Asn4
 
         public static int PromptIntRange(string prompt, int min, int max)
         {
-            int[] choices = Enumerable.Range(min, max - min + 1).ToArray();
-            return PromptInt(prompt, false, choices);
+            while (true)
+            {
+                Console.Write(prompt);
+                if (int.TryParse(Console.ReadLine(), out int value))
+                {
+                    if (value >= min && value <= max)
+                    {
+                        return value; // successful input
+                    }
+                }
+                Display.Error($"Invalid input. Please enter a number between {min} and {max}.");
+            }
         }
 
         public static string GetPlayerName()
