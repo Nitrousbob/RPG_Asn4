@@ -42,7 +42,7 @@ namespace RPG_Asn4
                 }
                 if (!isValid)
                 {
-                    //Clr.ErrorMsg("Invalid selection.");
+                    Display.Error("Invalid selection.");
                 }
             } while (!isValid);
             return choice;
