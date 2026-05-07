@@ -30,7 +30,7 @@
                         Display.Igm("\nExiting...");
                         return;
                     default:
-                        Console.WriteLine("Invalid choice. Please try again.");
+                        Display.Error("Invalid choice. Please try again.");
                         break;
                 }
             }
