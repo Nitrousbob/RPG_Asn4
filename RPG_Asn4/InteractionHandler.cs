@@ -2,19 +2,6 @@
 {
     public static class InteractionHandler
     {
-        public static void HandleSelection(List<IInteractable> targets)
-        {
-            if (targets.Count == 0) return;
-
-            int choice = TakeInput.GetMenuChoice();
-
-            if (choice > 0 && choice <= targets.Count)
-            {
-                targets[choice - 1].OnInteract();
-            }
-
-        }
-
         public static void InteractWith(List<IInteractable> targets)
         {
             bool interacting = true;
@@ -35,7 +22,7 @@
                 }
                 int exitOption = targets.Count + 1;
                 Display.Igm($"{exitOption}. Back to Main Menu.");
-                int choice = TakeInput.PromptIntRange("Select an option to interact with: ", 1, exitOption);
+                int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 1, exitOption);
 
                 if (choice == exitOption)
                 {
