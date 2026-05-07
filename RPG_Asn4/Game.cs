@@ -66,7 +66,7 @@ namespace RPG_Asn4
             }
         }
 
-        private void PlayGame()
+        public void PlayGame()
         {
             Display.Igm("\n--- Entering Game World ---");
 

@@ -19,7 +19,7 @@
                         g.LoadPlayer();
                         break;
                     case 3:
-                        g.StartGame();
+                        g.PlayGame();
                         break;
                     case 4:
                         Display.Igm("\nExiting...");
