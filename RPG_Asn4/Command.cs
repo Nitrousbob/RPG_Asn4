@@ -24,18 +24,21 @@ namespace RPG_Asn4
 
         public void Pet(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is Npc n)
+            if (c.CurrentTarget is IPettable pettable)
             {
-                Console.WriteLine($"You pet {n.Name}");
+                Console.WriteLine($"You pet {pettable.Name}");
+                //Display.Igm(pettable.getPetResponse);
             }
-            //if (c.CurrentTarget is Npc n)
-            //{
-            //    Display.Action($"You pet {n.Name}");
-            //    string petResponse = HumanDialogFactory.NpcPetResponse(n);
-            //    Display.Igm($"'{petResponse}'");
-            //}
-            //else
-
+            else if (c.CurrentTarget is Npc n)
+            {
+                Display.Action($"You try to pet {n.Name}");
+                Display.Igm($"{n.Name} doesn't seem to like that.");
+            }
+            else
+            {
+                Display.Igm("Very unusual, that's not something you can pet.");
+            }
+              
         }
 
         public void Help(List<Token> tokens, ComContext c)
