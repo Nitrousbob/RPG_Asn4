@@ -7,5 +7,10 @@
         {
    
         }
+
+        public override void OnInteract(Player player)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

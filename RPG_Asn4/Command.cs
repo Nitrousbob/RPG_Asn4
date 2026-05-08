@@ -10,9 +10,15 @@ namespace RPG_Asn4
     {
         public void Look(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is Npc n)
+            if (c.CurrentTarget is Animal a)
             {
-                Display.Action($"You look at {n.Name}");
+                Display.Action(a.GetDescription());
+                //string eyeBodyLanguage = AnimalDialogFactory.NpcEyeBehavior(a);
+                //Display.Igm($"'{eyeBodyLanguage}'");
+            }
+            else if (c.CurrentTarget is Npc n)
+            {
+                Display.Action(n.GetDescription());
                 string eyeBodyLanguage = HumanDialogFactory.NpcEyeBehavior(n);
                 Display.Igm($"'{eyeBodyLanguage}'");
             }
@@ -26,7 +32,7 @@ namespace RPG_Asn4
         {
             if (c.CurrentTarget is IPettable pettable)
             {
-                Console.WriteLine($"You pet {pettable.Name}");
+                Display.Action($"You pet {pettable.Name}");
                 //Display.Igm(pettable.getPetResponse);
             }
             else if (c.CurrentTarget is Npc n)
@@ -41,10 +47,26 @@ namespace RPG_Asn4
               
         }
 
+        public void Slap(List<Token> tokens, ComContext c)
+        {
+            if (c.CurrentTarget is IInteractable interactable)
+            {
+                Display.Action($"You slap {interactable.Name}");
+                Display.DarkAction($"{interactable.Name} looks at you with shock and anger.");
+                interactable.BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+                //remove interactable from npc while they are slapped, then add them back after a few turns to simulate them being mad at you for a while.
+                //this was put into the Animals and Npcs OnInteract method, so they will stop interacting with you for a few turns after being slapped.
+            }
+            else
+            {
+                Console.WriteLine("That didn't just happen again!");
+            }
+        }
+
         public void Help(List<Token> tokens, ComContext c)
         {
-            Console.WriteLine("Available commands: ");
-            Console.WriteLine("pet, look, help, exit, quit, bye");
+            Display.Action("Available commands: ");
+            Display.Bright("pet, look, help, exit, quit, bye, hit, slap");
         }
 
         public void Exit(List<Token> tokens, ComContext c)

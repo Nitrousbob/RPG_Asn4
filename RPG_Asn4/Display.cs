@@ -37,6 +37,18 @@
             Console.WriteLine(input);
             Console.ResetColor();
         }
+        public static void DarkAction(string input)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.WriteLine(input);
+            Console.ResetColor();
+        }
+        public static void Bright(string input)
+        {
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine(input);
+            Console.ResetColor();
+        }
 
         public static void ShowPlayerInfo(Player player)
         {

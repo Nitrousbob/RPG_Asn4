@@ -1,9 +1,14 @@
 ﻿namespace RPG_Asn4
 {
-    public abstract class Actor : IDamageable
+    public abstract class Actor : IDamageable, IInteractable
     {
         public string Name { get; private set; }
         public int Health { get; private set; }
+        public int interactionCooldown { get; private set; } = 0;
+        public bool canInteract
+        {
+            get { return interactionCooldown <= 0; }
+        }
 
         protected Actor(string name, int health)
         {
@@ -28,5 +33,32 @@
             Health += amount;
             Console.WriteLine($"{Name} healed {amount} health. Current health: {Health}");
         }
+        public void BlockInteraction(int turns)
+        {
+            interactionCooldown = turns;
+        }
+
+        public void TickInteractionCooldown()
+        {
+            if (interactionCooldown > 0)
+            {
+                interactionCooldown--;
+            }
+        }
+
+        public abstract void OnInteract(Player player);
+        
+            //if (canInteract)
+            //{
+            //    Display.Igm($"\n{Name} interacts with you.");
+            //    // Implement specific interaction logic in derived classes
+            //}
+            //else
+            //{
+            //    Display.Igm($"{Name} does not want to interact with you right now.");
+            //}
     }
+
+        
 }
+

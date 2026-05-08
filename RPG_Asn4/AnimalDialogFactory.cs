@@ -70,7 +70,6 @@ namespace RPG_Asn4
                 {
                     Tokenizer t = new Tokenizer();
                     var ast = t.Tokenize(input);
-
                     var verb = ast?.Where(x => x.Name == TokenType.verb).FirstOrDefault();
                     if (verb is not null)  //if no verb is found.
                     {

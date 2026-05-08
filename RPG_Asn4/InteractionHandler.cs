@@ -26,8 +26,8 @@
 
                 if (choice == exitOption)
                 {
-                    interacting = false;
                     Display.Igm("\nYou step back from the interaction.");
+                    interacting = false;
                 }
                 else if (choice > 0 && choice <= targets.Count)
                 {
