@@ -12,11 +12,7 @@
         {
             return $"You see {Name}, a character in this world. But does {Name} have character?";
         }
-
         
-    
-        
-
         public void OnInteract(Player player)
         {
             string greeting = HumanDialogFactory.GetRandomGreeting(this);

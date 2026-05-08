@@ -105,6 +105,8 @@ namespace RPG_Asn4
             {
                 startNpcs.Add(HumanNpcFactory.GetStandardTier(1));
             }
+
+            startNpcs.Add(AnimalNpcFactory.GetStandardTier(1));  //add an animal npc to the starting scene for variety
             
             //Initialize the starting scene
             Scene startArea = new Scene(
@@ -112,7 +114,7 @@ namespace RPG_Asn4
                 startNpcs
             );
             startArea.Describe(player);
-
+            
             // For now, we return to the main menu after the scene is done.
             currentState = GameState.MainMenu;
             Display.Igm("\n--- Returning to the Main Menu ---");
