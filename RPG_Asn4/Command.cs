@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Linq;
-
-namespace RPG_Asn4
+﻿namespace RPG_Asn4
 {
     //im starting to notice my Command class needs to know about the Context of the game for different commands.
     public class Command
@@ -13,8 +8,6 @@ namespace RPG_Asn4
             if (c.CurrentTarget is Animal a)
             {
                 Display.Action(a.GetDescription());
-                //string eyeBodyLanguage = AnimalDialogFactory.NpcEyeBehavior(a);
-                //Display.Igm($"'{eyeBodyLanguage}'");
             }
             else if (c.CurrentTarget is Npc n)
             {
@@ -44,7 +37,7 @@ namespace RPG_Asn4
             {
                 Display.Igm("Very unusual, that's not something you can pet.");
             }
-              
+
         }
 
         public void Slap(List<Token> tokens, ComContext c)

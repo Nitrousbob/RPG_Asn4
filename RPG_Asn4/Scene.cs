@@ -1,6 +1,6 @@
 ﻿namespace RPG_Asn4
 {
-    internal class Scene
+    public class Scene
     {
         public string Description { get; set; }
         public List<IInteractable> Locals { get; set; }
@@ -9,6 +9,14 @@
         {
             Description = description;
             Locals = locals ?? new List<IInteractable>();
+        }
+
+        public void TickTurn()
+        {
+            foreach(IInteractable local in Locals)
+            {
+                local.TickInteractionCooldown();
+            }
         }
 
         public void Describe(Player player)

@@ -85,15 +85,19 @@ public static class HumanDialogFactory
                 {
                     Tokenizer t = new Tokenizer();
                     var ast = t.Tokenize(input);
-
                     var verb = ast?.Where(x => x.Name == TokenType.verb).FirstOrDefault();
-                    if (verb is not null)  //if no verb is found.
+                    if (verb is not null)  
                     {
                         try
                         {
                             Action action = lookupTable[verb.Value];
                             ComContext context = new ComContext(p, n);
                             action(ast, context);
+                            n.TickInteractionCooldown();
+                            if (!n.canInteract)
+                            {
+                                talk = false;
+                            }
                             
                         }
                         catch (KeyNotFoundException)

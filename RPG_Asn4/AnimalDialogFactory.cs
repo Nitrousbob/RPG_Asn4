@@ -1,46 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RPG_Asn4
+﻿namespace RPG_Asn4
 {
     public class AnimalDialogFactory
     {
 
         public static string GetRandomAnimalNoise()
         {
-            string[] noises =
+            string[] noises =  //chatGpt generated list, and I editied it a bit to be more fitting for the game, and less repetitive.
             {
-                "A low growl rolls through the darkness.",
-                "Something chitters from inside the walls.",
-                "A wet snarl echoes nearby.",
-                "Claws scrape slowly across stone.",
-                "A distant howl rises, then cuts off suddenly.",
-                "Something breathes heavily just out of sight.",
-                "A sharp screech tears through the silence.",
-                "Tiny feet skitter across the floor.",
-                "A beast lets out a broken, rasping cry.",
-                "Wings flap overhead, but you see nothing.",
-                "A deep hiss seeps from the shadows.",
-                "Something gnaws loudly in the dark.",
-                "A guttural bark answers from far away.",
-                "A long, mournful wail drifts through the air.",
-                "Something clicks its teeth together.",
-                "A low purr vibrates from the blackness.",
-                "A creature sniffs loudly, searching for you.",
-                "A shrill cry echoes, almost like laughter.",
-                "Something drags its claws across wood.",
-                "A pack of unseen creatures yips in the distance.",
-                "A hollow hoot sounds from above.",
-                "A beast exhales with a rattling wheeze.",
-                "Something splashes in unseen water.",
-                "A raspy caw echoes between the trees.",
-                "A soft whimper comes from somewhere nearby.",
-                "A sudden snort breaks the silence.",
-                "Something lets out a clicking, insect-like trill.",
-                "A deep croak bubbles from the darkness.",
-                "A creature snarls, then goes completely quiet.",
-                "A strange animal cry echoes like a warning."
+                "a low growl through the darkness.",
+                "chittering sounds.",
+                "an echoing wet snarl.",
+                "a claw scrape.",
+                "a rising howl, then cuts off suddenly.",
+                "a sharp screech tears through the silence.",
+                "a broken, rasping cry.",
+                "a deep hiss seeps from the shadows.",
+                "a loud gnawing.",
+                "a guttural bark.",
+                "a long, mournful wail.",
+                "a shrill cry, almost like laughter.",
+                "a rattling wheeze.",
+                "a sudden snort.",
+                "a deep croak.",
+                "a snarl, then goes completely quiet.",
+                "strange animal cries that echoe like a warning."
                 };
 
             int index = Random.Shared.Next(noises.Length);
@@ -48,7 +31,7 @@ namespace RPG_Asn4
         }
 
 
-    public static void Dialogger(Animal a, Player p)
+        public static void Dialogger(Animal a, Player p)
         {
             bool talk = true;
             while (talk == true)
@@ -78,7 +61,10 @@ namespace RPG_Asn4
                             Action action = lookupTable[verb.Value];
                             ComContext context = new ComContext(p, a);
                             action(ast, context);
-
+                            if (!a.canInteract)
+                            {
+                                talk = false;
+                            }
                         }
                         catch (KeyNotFoundException)
                         {

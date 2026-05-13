@@ -48,15 +48,6 @@
 
         public abstract void OnInteract(Player player);
         
-            //if (canInteract)
-            //{
-            //    Display.Igm($"\n{Name} interacts with you.");
-            //    // Implement specific interaction logic in derived classes
-            //}
-            //else
-            //{
-            //    Display.Igm($"{Name} does not want to interact with you right now.");
-            //}
     }
 
         
