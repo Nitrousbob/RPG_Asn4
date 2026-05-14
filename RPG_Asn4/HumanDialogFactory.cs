@@ -1,7 +1,14 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 namespace RPG_Asn4
 {
-public static class HumanDialogFactory
-{
+    public static class HumanDialogFactory
+    {
+        private static readonly LookupTable lookupTable = new LookupTable();
+        private static readonly Tokenizer tokenizer = new Tokenizer();
         
         public static string GetRandomGreeting(Npc n)
         {
@@ -63,54 +70,47 @@ public static class HumanDialogFactory
             }
         }
 
-        public static void Dialogger(Npc n, Player p)
+        public static bool HandleDialogTurn(Npc n, Player p)
         {
-            bool talk = true;
-            while (talk == true)
+            Console.WriteLine("What would you like to do?");
+            var input = Console.ReadLine()?.ToLower();
+            if (string.IsNullOrWhiteSpace(input))
             {
-                LookupTable lookupTable = new LookupTable();
-                Console.WriteLine("What would you like to do?");
-                var input = Console.ReadLine()?.ToLower();  //this can be migrated to TakeInput?
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    Console.WriteLine("No command entered.");
-                    continue;
-                }
+                Console.WriteLine("No command entered.");
+                return true;
+            }
 
-                if (input == "quit" || input == "exit" || input == "bye")
+            if (input == "quit" || input == "exit" || input == "bye")
+            {
+                return false;
+            }
+
+            var ast = tokenizer.Tokenize(input);
+            var verb = ast?.FirstOrDefault(x => x.Name == TokenType.verb);
+            if (verb is not null)  
+            {
+                try
                 {
-                    talk = false;
+                    Action action = lookupTable[verb.Value];
+                    ComContext context = new ComContext(p, n);
+                    action(ast, context);
+                    
+                    if (context.EndInteration || !n.canInteract)
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (KeyNotFoundException)
                 {
-                    Tokenizer t = new Tokenizer();
-                    var ast = t.Tokenize(input);
-                    var verb = ast?.Where(x => x.Name == TokenType.verb).FirstOrDefault();
-                    if (verb is not null)  
-                    {
-                        try
-                        {
-                            Action action = lookupTable[verb.Value];
-                            ComContext context = new ComContext(p, n);
-                            action(ast, context);
-                            n.TickInteractionCooldown();
-                            if (!n.canInteract)
-                            {
-                                talk = false;
-                            }
-                            
-                        }
-                        catch (KeyNotFoundException)
-                        {
-                            Console.WriteLine("That verb is not recognized.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No verb found.");
-                    }
+                    Console.WriteLine("That verb is not recognized.");
                 }
             }
+            else
+            {
+                Console.WriteLine("No verb found.");
+            }
+            
+            return true;
         }
 
     }

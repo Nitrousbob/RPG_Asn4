@@ -1,7 +1,9 @@
-﻿namespace RPG_Asn4
+﻿﻿namespace RPG_Asn4
 {
     public class AnimalDialogFactory
     {
+        private static readonly LookupTable lookupTable = new LookupTable();
+        private static readonly Tokenizer tokenizer = new Tokenizer();
 
         public static string GetRandomAnimalNoise()
         {
@@ -36,7 +38,6 @@
             bool talk = true;
             while (talk == true)
             {
-                LookupTable lookupTable = new LookupTable();
                 Console.WriteLine("What would you like to do?");
                 var input = Console.ReadLine()?.ToLower();  //this can be migrated to TakeInput?
                 if (string.IsNullOrWhiteSpace(input))
@@ -51,9 +52,8 @@
                 }
                 else
                 {
-                    Tokenizer t = new Tokenizer();
-                    var ast = t.Tokenize(input);
-                    var verb = ast?.Where(x => x.Name == TokenType.verb).FirstOrDefault();
+                    var ast = tokenizer.Tokenize(input);
+                    var verb = ast?.FirstOrDefault(x => x.Name == TokenType.verb);
                     if (verb is not null)  //if no verb is found.
                     {
                         try
@@ -61,7 +61,7 @@
                             Action action = lookupTable[verb.Value];
                             ComContext context = new ComContext(p, a);
                             action(ast, context);
-                            if (!a.canInteract)
+                            if (context.EndInteration || !a.canInteract)
                             {
                                 talk = false;
                             }

@@ -2,6 +2,8 @@
 {
     public abstract class Actor : IDamageable, IInteractable
     {
+        public StateMachine StateMachine { get; private set; } = new StateMachine();
+
         public string Name { get; private set; }
         public int Health { get; private set; }
         public int interactionCooldown { get; private set; } = 0;

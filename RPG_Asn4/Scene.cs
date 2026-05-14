@@ -16,13 +16,18 @@
             foreach(IInteractable local in Locals)
             {
                 local.TickInteractionCooldown();
+
+                if (local is Actor actor)
+                {
+                    actor.StateMachine.Update();
+                }
             }
         }
 
-        public void Describe(Player player)
+        public bool Describe(Player player)
         {
             Display.Igm(Description);
-            InteractionHandler.InteractWith(Locals, player);
+            return InteractionHandler.InteractWith(Locals, player);
         }
 
         //define a starting scene with a description and some npcs to interact with

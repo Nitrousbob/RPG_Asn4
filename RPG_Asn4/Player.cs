@@ -2,10 +2,10 @@
 {
     public class Player : Actor
     {
-        
+        //the player has to track its own state 
         public Player(string name, int health) : base(name, health)
         {
-   
+            
         }
 
         public override void OnInteract(Player player)

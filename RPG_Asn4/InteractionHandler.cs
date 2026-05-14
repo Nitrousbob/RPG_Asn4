@@ -2,42 +2,48 @@
 {
     public static class InteractionHandler
     {
-        public static void InteractWith(List<IInteractable> targets, Player player)
+        public static bool InteractWith(List<IInteractable> targets, Player player)
         {
-            bool interacting = true;
-
-            while (interacting)
+            
+            if (targets.Count == 0)  
             {
-                if (targets.Count == 0)  
-                {
-                    Display.Igm("There is nothing to interact with.");
-                    return;
-                }
-
-                Display.Igm("You see the following:");
-
-                for (int i = 0; i < targets.Count; i++)
-                {
-                    Display.List($"{i + 1}. {targets[i].Name}"); //This lists the interactable targets by their type (e.g., Npc, Item, etc.)
-                }
-                int exitOption = targets.Count + 1;
-                Display.Igm($"{exitOption}. Back to Main Menu.");
-                int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 1, exitOption);
-
-                if (choice == exitOption)
-                {
-                    Display.Igm("\nYou step back from the interaction.");
-                    interacting = false;
-                }
-                else if (choice > 0 && choice <= targets.Count)
-                {
-                    targets[choice - 1].OnInteract(player);
-                }
-                else
-                {
-                    Display.Error("Invalid Choice.");
-                }
+                Display.Igm("There is nothing to interact with.");
+                return true;
             }
+
+            Display.Igm("You see the following:");
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                Display.List($"{i + 1}. {targets[i].Name}"); //This lists the interactable targets by their type (e.g., Npc, Item, etc.)
+            }
+            int waitOption = targets.Count + 1;  //this adds a wait option to let an npc finish their state before they are ready to interact
+            int exitOption = targets.Count + 2; // this adds the number of targets + 2 to the list of available selections
+            Display.Igm($"{waitOption}. Wait a moment.");
+            Display.Igm($"{exitOption}. Back to Main Menu.");
+            int choice = TakeInput.PromptIntRange("Your selection adventurer: ", 1, exitOption);
+
+            if (choice == exitOption)
+            {
+                Display.Igm("\nYou step back from the interaction.");
+                return false;
+            }
+            else if (choice == waitOption)
+            {
+                Display.Igm("\nYou stand quietly, watching the area.");
+                return true;
+            }
+            else if (choice > 0 && choice <= targets.Count)
+            {
+                targets[choice - 1].OnInteract(player);
+                return true;
+            }
+            else
+            {
+                Display.Error("Invalid Choice.");
+                return true;
+            }
+            
         }
     }
 }

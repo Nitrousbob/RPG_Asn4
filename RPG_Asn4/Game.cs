@@ -109,17 +109,23 @@ namespace RPG_Asn4
             startNpcs.Add(AnimalNpcFactory.GetStandardTier(1));  //add an animal npc to the starting scene for variety
             
             //Initialize the starting scene
-            Scene startArea = new Scene(
+            Scene currentScene = new Scene(
                 "\nYou find yourself in a small clearing surrounded by dense forest.",
                 startNpcs
             );
-            startArea.Describe(player);
             
-            // For now, we return to the main menu after the scene is done.
-            currentState = GameState.MainMenu;
-            Display.Igm("\n--- Returning to the Main Menu ---");
-            Console.WriteLine("\nPress any key to continue...");
-            Console.ReadLine();
+            bool inWorld = true;
+            while (inWorld)
+            {
+                inWorld = currentScene.Describe(player);
+
+                if(inWorld)
+                {
+                    currentScene.TickTurn();
+                }
+            }
+
+            currentState = GameState.MainMenu;  //outside of inGame you are in the MainMenu
         }
 
         public void CreatePlayer()

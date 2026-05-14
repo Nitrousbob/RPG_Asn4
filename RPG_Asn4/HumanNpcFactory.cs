@@ -36,7 +36,45 @@ namespace RPG_Asn4
         public static Npc GetStandardTier(int tier = 1)  
         {
             int index = Random.Shared.Next(_tier1Townsfolk.Length);
-            return _tier1Townsfolk[index]();
+            Npc npc = _tier1Townsfolk[index]();
+            AssignRandomBehaviors(npc);
+            return npc;
+        }
+
+        private static void AssignRandomBehaviors(Npc npc)
+        {
+            int choice = Random.Shared.Next(4);
+            switch (choice)
+            {
+                case 0:
+                    npc.IdleAction = "shifts their weight idly.";
+                    npc.BusyStart = "pulls out a yo-yo.";
+                    npc.BusyAction = "does the 'Walk the Dog' trick with their yo-yo.";
+                    npc.BusyEnd = "puts the yo-yo away.";
+                    npc.BusyRefusal = "is too focused on their yo-yo to talk right now.";
+                    break;
+                case 1:
+                    npc.IdleAction = "stares up at the sky.";
+                    npc.BusyStart = "pulls out a small, worn book.";
+                    npc.BusyAction = "flips a page in their book, reading intently.";
+                    npc.BusyEnd = "snaps their book shut and pockets it.";
+                    npc.BusyRefusal = "is too engrossed in their book to talk right now.";
+                    break;
+                case 2:
+                    npc.IdleAction = "whistles a quiet tune.";
+                    npc.BusyStart = "pulls a gold coin from their pocket.";
+                    npc.BusyAction = "rolls the coin gracefully across their knuckles.";
+                    npc.BusyEnd = "snatches the coin from the air and puts it away.";
+                    npc.BusyRefusal = "is too busy practicing a coin trick to talk right now.";
+                    break;
+                case 3:
+                    npc.IdleAction = "kicks a pebble on the ground.";
+                    npc.BusyStart = "takes out a piece of wood and a small knife.";
+                    npc.BusyAction = "whittles away at the piece of wood.";
+                    npc.BusyEnd = "blows the sawdust off their carving and puts it away.";
+                    npc.BusyRefusal = "is too focused on whittling to talk right now.";
+                    break;
+            }
         }
 
         private static bool RollHasEyes(int chanceEyes)
