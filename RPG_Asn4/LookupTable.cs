@@ -32,7 +32,7 @@ namespace RPG_Asn4
             Add("leave", c.Exit);
             Add("laugh", c.Laugh);
             Add("flirt", c.Flirt);
-            
+            Add("fart", c.Fart);
         }
     }
 }

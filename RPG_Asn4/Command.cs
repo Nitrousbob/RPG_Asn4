@@ -109,10 +109,32 @@
             }
         }
 
+        public void Fart(List<Token> tokens, ComContext c)
+        {
+            if(c.CurrentTarget is IInteractable interactable)
+            {
+                Display.Action($"You break wind in their general direction");
+
+                int choice = Random.Shared.Next(3);
+                switch (choice)
+                {
+                    case 0:
+                        Display.DarkAction($"{interactable.Name} laughs at your display of bodily function.");
+                        break;
+                    case 1:
+                        Display.DarkAction($"{interactable.Name} is not amused.");
+                        break;
+                    case 2:
+                        Display.DarkAction($"{interactable.Name} fires back with their own brand of flatulence");
+                        break;
+                }
+            }
+        }
+
         public void Help(List<Token> tokens, ComContext c)
         {
             Display.Action("Available commands: ");
-            Display.Bright("pet, look, help, exit, quit, bye, hit, slap, talk");
+            Display.Bright("pet, look, help, exit, quit, bye, hit, slap, talk, laugh, flirt, fart");
             //can the list for actions build up from a dictionary and display available options?
         }
 

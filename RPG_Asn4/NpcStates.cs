@@ -55,8 +55,6 @@ namespace RPG_Asn4
         public void Exit() {}
     }
 
-
-
     public class NpcTalkingState : IState
     {
         private readonly Npc npc;
