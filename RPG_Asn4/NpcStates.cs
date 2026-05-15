@@ -3,6 +3,7 @@ namespace RPG_Asn4
     public class NpcIdleState : IState
     {
         private readonly Npc npc;
+        public string Name => "Idle";
 
         public NpcIdleState(Npc npc)
         {
@@ -30,6 +31,7 @@ namespace RPG_Asn4
     public class NpcBusyState : IState
     {
         private readonly Npc npc;
+        public string Name => "Busy";
 
         public NpcBusyState(Npc npc)
         {
@@ -58,6 +60,7 @@ namespace RPG_Asn4
     public class NpcTalkingState : IState
     {
         private readonly Npc npc;
+        public string Name => "Talking";
 
         public NpcTalkingState(Npc npc)
         {
@@ -66,7 +69,7 @@ namespace RPG_Asn4
 
         public void Enter()
         {
-            string greeting = HumanDialogFactory.GetRandomGreeting(npc);
+            string greeting = DialogFactory.GetRandomGreeting(npc);
             Display.Igm($"\n{npc.Name} says: '{greeting}'");
         }
 
@@ -81,7 +84,7 @@ namespace RPG_Asn4
             bool isTalking = true;
             while (isTalking)
             {
-                isTalking = HumanDialogFactory.HandleDialogTurn(npc, npc.CurrentPlayer);
+                isTalking = DialogFactory.HandleDialogTurn(npc, npc.CurrentPlayer);
             }
             
             npc.CurrentPlayer = null; // Clear the player reference

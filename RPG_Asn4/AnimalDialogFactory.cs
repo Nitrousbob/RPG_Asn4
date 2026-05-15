@@ -2,9 +2,6 @@
 {
     public class AnimalDialogFactory
     {
-        private static readonly LookupTable lookupTable = new LookupTable();
-        private static readonly Tokenizer tokenizer = new Tokenizer();
-
         public static string GetRandomAnimalNoise()
         {
             string[] noises =  //chatGpt generated list, and I editied it a bit to be more fitting for the game, and less repetitive.
@@ -30,53 +27,6 @@
 
             int index = Random.Shared.Next(noises.Length);
             return noises[index];
-        }
-
-
-        public static void Dialogger(Animal a, Player p)
-        {
-            bool talk = true;
-            while (talk == true)
-            {
-                Console.WriteLine("What would you like to do?");
-                var input = Console.ReadLine()?.ToLower();  //this can be migrated to TakeInput?
-                if (string.IsNullOrWhiteSpace(input))
-                {
-                    Console.WriteLine("No command entered.");
-                    continue;
-                }
-
-                if (input == "quit" || input == "exit" || input == "bye")
-                {
-                    talk = false;
-                }
-                else
-                {
-                    var ast = tokenizer.Tokenize(input);
-                    var verb = ast?.FirstOrDefault(x => x.Name == TokenType.verb);
-                    if (verb is not null)  //if no verb is found.
-                    {
-                        try
-                        {
-                            Action action = lookupTable[verb.Value];
-                            ComContext context = new ComContext(p, a);
-                            action(ast, context);
-                            if (context.EndInteration || !a.canInteract)
-                            {
-                                talk = false;
-                            }
-                        }
-                        catch (KeyNotFoundException)
-                        {
-                            Console.WriteLine("That verb is not recognized.");
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("No verb found.");
-                    }
-                }
-            }
         }
     }
 }

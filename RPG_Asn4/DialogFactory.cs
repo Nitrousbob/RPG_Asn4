@@ -5,7 +5,7 @@ using System.Text;
 
 namespace RPG_Asn4
 {
-    public static class HumanDialogFactory
+    public static class DialogFactory
     {
         private static readonly LookupTable lookupTable = new LookupTable();
         private static readonly Tokenizer tokenizer = new Tokenizer();
@@ -70,7 +70,7 @@ namespace RPG_Asn4
             }
         }
 
-        public static bool HandleDialogTurn(Npc n, Player p)
+        public static bool HandleDialogTurn(Actor a, Player p)
         {
             Console.WriteLine("What would you like to do?");
             var input = Console.ReadLine()?.ToLower();
@@ -92,10 +92,10 @@ namespace RPG_Asn4
                 try
                 {
                     Action action = lookupTable[verb.Value];
-                    ComContext context = new ComContext(p, n);
+                    ComContext context = new ComContext(p, a);
                     action(ast, context);
                     
-                    if (context.EndInteration || !n.canInteract)
+                    if (context.EndInteration || !a.canInteract)
                     {
                         return false;
                     }

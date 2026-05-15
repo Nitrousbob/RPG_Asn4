@@ -26,7 +26,8 @@
 
         public bool Describe(Player player)
         {
-            Display.Igm(Description);
+            Display.Igm(Description);  //Describe the scene
+            TickTurn();  //bring the world alive
             return InteractionHandler.InteractWith(Locals, player);
         }
 

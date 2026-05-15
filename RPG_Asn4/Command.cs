@@ -12,7 +12,7 @@
             else if (c.CurrentTarget is Npc n)
             {
                 Display.Action(n.GetDescription());
-                string eyeBodyLanguage = HumanDialogFactory.NpcEyeBehavior(n);
+                string eyeBodyLanguage = DialogFactory.NpcEyeBehavior(n);
                 Display.Igm($"'{eyeBodyLanguage}'");
             }
             else
@@ -68,30 +68,41 @@
 
         public void Slap(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is IInteractable interactable)
+            if (c.CurrentTarget is Npc npc)
             {
-                Display.Action($"You slap {interactable.Name}");
-                Display.DarkAction($"{interactable.Name} looks at you with shock and anger.");
-                interactable.BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+                Display.Action($"You slap {npc.Name}");
+                Display.DarkAction($"{npc.Name} looks at you with shock and anger.");
+                npc.BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
                 //remove interactable from npc while they are slapped, then add them back after a few turns to simulate them being mad at you for a while.
                 //this was put into the Animals and Npcs OnInteract method, so they will stop interacting with you for a few turns after being slapped.
             }
+            else if (c.CurrentTarget is Animal animal)
+            {
+                Display.Action($"You slap {animal.Name}");
+                Display.DarkAction($"{animal.Name} looks at you with shock and anger.");
+                animal.BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+            }
             else
             {
-                Console.WriteLine("That didn't just happen again!");
+                Display.Igm("That didn't just happen again!");  //enter combat state?
             }
         }
 
         public void Laugh(List<Token> tokens, ComContext c)
         {
-            if (c.CurrentTarget is IInteractable interactable)
+            if (c.CurrentTarget is Npc npc)
             {
-                Display.Action($"You laugh at {interactable.Name}");
-                Display.DarkAction($"{interactable.Name} laughs back at you.");
+                Display.Action($"You laugh at {npc.Name}");
+                Display.DarkAction($"{npc.Name} laughs back at you.");
+            }
+            else if (c.CurrentTarget is Animal animal)
+            {
+                Display.Action($"You laugh at {animal.Name}");
+                Display.DarkAction($"{animal.Name} tilts its head, confused by the noise.");
             }
             else
             {
-                Console.WriteLine("There I go just laughing out loud again.");
+                Display.Igm("There I go just laughing out loud again.");
             }
         }   
 
@@ -103,9 +114,14 @@
                 Display.DarkAction($"{interactable.Name} blushes and looks away.");
                 //TODO maybe need to add a mood property or enum
             }
+            else if (c.CurrentTarget is Animal animal)
+            {
+                Display.Action($"You try to flirt with {animal.Name}");
+                Display.DarkAction($"{animal.Name} ignores you completely.");
+            }
             else
             {
-                Console.WriteLine("You can't flirt with that. Im sure its flattered though");
+                Display.Igm("You can't flirt with that. Im sure its flattered though");
             }
         }
 

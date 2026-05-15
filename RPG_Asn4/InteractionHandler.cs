@@ -15,8 +15,15 @@
 
             for (int i = 0; i < targets.Count; i++)
             {
-                Display.List($"{i + 1}. {targets[i].Name}"); //This lists the interactable targets by their type (e.g., Npc, Item, etc.)
+                string stateLabel = "";
+
+                if (targets[i] is Actor actor && actor.StateMachine.CurrentState != null)
+                {
+                    stateLabel = $" ({actor.StateMachine.CurrentState.Name})";
+                }
+                Display.List($"{i + 1}. {targets[i].Name}{stateLabel}");
             }
+
             int waitOption = targets.Count + 1;  //this adds a wait option to let an npc finish their state before they are ready to interact
             int exitOption = targets.Count + 2; // this adds the number of targets + 2 to the list of available selections
             Display.Igm($"{waitOption}. Wait a moment.");

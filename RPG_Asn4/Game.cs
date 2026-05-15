@@ -118,11 +118,6 @@ namespace RPG_Asn4
             while (inWorld)
             {
                 inWorld = currentScene.Describe(player);
-
-                if(inWorld)
-                {
-                    currentScene.TickTurn();
-                }
             }
 
             currentState = GameState.MainMenu;  //outside of inGame you are in the MainMenu
