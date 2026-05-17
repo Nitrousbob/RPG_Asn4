@@ -2,10 +2,11 @@ namespace RPG_Asn4
 {
     public interface IReactable
     {
-        void OnSlapped();
-        void OnLaughedAt();
-        void OnFlirtedWith();
-        void OnFartedAt();
+        string Name { get; }
+        string OnAgitate();
+        string OnLaughedAt();
+        string OnFlirtedWith();
+        string OnFartedAt();
     }
     
 }

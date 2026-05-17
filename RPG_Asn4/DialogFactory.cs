@@ -13,6 +13,23 @@ namespace RPG_Asn4
         public static string GetRandomGreeting(Npc n)
         {
         
+            // 30% chance for the NPC to comment specifically on the current weather
+            if (Random.Shared.Next(100) < 30 && Game.CurrentGame?.CurrentScene != null)
+            {
+                Weather currentWeather = Game.CurrentGame.CurrentScene.CurrentWeather;
+
+                return currentWeather switch
+                {
+                    Weather.Clear => "Beautiful clear skies today, wouldn't you say?",
+                    Weather.Cloudy => "Looks a bit gloomy with all these clouds. Hope it doesn't rain.",
+                    Weather.Raining => "Miserable weather. I hate the rain.",
+                    Weather.Storming => "By the gods, this storm is fierce! Stay safe out there.",
+                    Weather.Foggy => "Can barely see my own hand in front of my face with this fog.",
+                    Weather.Windy => "Hold onto your hat! This wind is something fierce.",
+                    _ => "Strange weather we're having."
+                };
+            }
+
         string[] NpcTownsfolkGreeting =  
             {
                 "Lovely weather we're having, isn't it?",

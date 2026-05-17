@@ -66,12 +66,13 @@
 
         }
 
-        public void Slap(List<Token> tokens, ComContext c)
+        public void Agitate(List<Token> tokens, ComContext c)
         {
             if (c.CurrentTarget is IReactable reactable)
             {
-                //Display.Action($"You slap {reactable.Name}");
-                reactable.OnSlapped();     
+                Display.Action($"You slap {reactable.Name}");
+                string reaction = reactable.OnAgitate();
+                Display.DarkAction(reaction);     
             }
             else
             {
@@ -83,7 +84,9 @@
         {
             if (c.CurrentTarget is IReactable reactable)
             {
-                reactable.OnLaughedAt();
+                Display.Action($"You laugh at {reactable.Name}");
+                string reaction = reactable.OnLaughedAt();
+                Display.DarkAction(reaction);
             }
             else
             {
@@ -95,7 +98,9 @@
         {
             if (c.CurrentTarget is IReactable reactable)
             {
-                reactable.OnFlirtedWith();
+                Display.Action($"You flirt with {reactable.Name}");
+                string reaction = reactable.OnFlirtedWith();
+                Display.DarkAction(reaction);
             }
             else
             {
@@ -107,7 +112,9 @@
         {
             if(c.CurrentTarget is IReactable reactable)
             {
-                reactable.OnFartedAt();
+                Display.Action($"You break wind in their general direction");
+                string reaction = reactable.OnFartedAt();
+                Display.DarkAction(reaction);
             }
         }
 

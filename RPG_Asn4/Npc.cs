@@ -13,7 +13,6 @@
         public string BusyAction {get; set;}
         public string BusyEnd {get; set;}
         public string BusyRefusal {get; set;}
-
         public bool HasEyes { get; private set; }
         public int InteractionCount { get; set; } = 0; // This property will track how many times the NPC has greeted the player.
         public Npc(string name, int health, bool hasEyes) : base(name, health)
@@ -74,42 +73,40 @@
             StateMachine.ChangeState(TalkingState);
         }
 
-        public void OnSlapped()
+        public string OnAgitate()
         {
-            Display.Action($"You slap {Name}");
-            Display.DarkAction($"{Name} looks at you with shock and anger.");
+            //Display.Action($"You agitate {Name}");  srp refactor
+            //may need to change BlockInteraction into Agitated
             BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+            return $"{Name} looks at you with shock and anger.";
         }
 
-        public void OnLaughedAt()
+        public string OnLaughedAt()
         {
-            Display.Action($"You laugh at {Name}");
-            Display.DarkAction($"{Name} laughs back at you.");
+            //Display.Action($"You laugh at {Name}");  srp refactor
+            return $"{Name} laughs back at you.";
         }
 
-        public void OnFlirtedWith()
+        public string OnFlirtedWith()
         {
-            Display.Action($"You flirt with {Name}");
-            Display.DarkAction($"{Name} blushes and looks away.");
+            //Display.Action($"You flirt with {Name}");  srp refactor
+            return $"{Name} blushes and looks away.";
 
         }
 
-        public void OnFartedAt()
+        public string OnFartedAt()
         {
-            Display.Action($"You break wind in their general direction");
+            //Display.Action($"You break wind in their general direction");  srp refactor
 
                 int choice = Random.Shared.Next(3);
                 switch (choice)
                 {
                     case 0:
-                        Display.DarkAction($"{Name} laughs at your display of bodily function.");
-                        break;
+                        return $"{Name} laughs at your display of bodily function.";
                     case 1:
-                        Display.DarkAction($"{Name} is not amused.");
-                        break;
-                    case 2:
-                        Display.DarkAction($"{Name} fires back with their own brand of flatulence");
-                        break;
+                        return $"{Name} is not amused.";
+                    default:
+                        return $"{Name} fires back with their own brand of flatulence";
                 }
         }
     }

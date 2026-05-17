@@ -31,6 +31,10 @@ namespace RPG_Asn4
             Exit,
         }
         
+        public static Game? CurrentGame { get; private set; }
+        public Scene? CurrentScene { get; private set; }
+        public ColorMode CurrentMode { get; set; } = ColorMode.FullColor;
+
         private GameState currentState;
         private const int StartingHealth = 20;  //start player with 20 health
         private Player? player;  //this is a nullable type, so it can be
@@ -38,6 +42,7 @@ namespace RPG_Asn4
         private string path = AppDomain.CurrentDomain.BaseDirectory;  //this will put it in the same directory as executable, which is probably the bin/Debug/net10.0 folder
         public Game()
         {
+            CurrentGame = this;
             currentState = GameState.MainMenu;
         }
 
@@ -109,7 +114,7 @@ namespace RPG_Asn4
             startNpcs.Add(AnimalNpcFactory.GetStandardTier(1));  //add an animal npc to the starting scene for variety
             
             //Initialize the starting scene
-            Scene currentScene = new Scene(
+            CurrentScene = new Scene(
                 "\nYou find yourself in a small clearing surrounded by dense forest.",
                 startNpcs
             );
@@ -117,7 +122,7 @@ namespace RPG_Asn4
             bool inWorld = true;
             while (inWorld)
             {
-                inWorld = currentScene.Describe(player);
+                inWorld = CurrentScene.Describe(player);
             }
 
             currentState = GameState.MainMenu;  //outside of inGame you are in the MainMenu

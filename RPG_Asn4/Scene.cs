@@ -1,18 +1,44 @@
 ﻿namespace RPG_Asn4
 {
+    public enum Weather
+    {
+        Clear,
+        Cloudy,
+        Raining,
+        Storming,
+        Foggy,
+        Windy
+    }
+
+    public enum TimeOfDay
+    {
+        Morning,
+        Afternoon,
+        Evening,
+        Night
+    }
+
     public class Scene
     {
         public string Description { get; set; }
         public List<IInteractable> Locals { get; set; }
 
+        public Weather CurrentWeather {get; private set;}
+        public TimeOfDay CurrentTime {get; private set;}
+        private int turnsToTimeChange;
         public Scene(string description, List<IInteractable> locals)
         {
             Description = description;
             Locals = locals ?? new List<IInteractable>();
+            CurrentWeather = Weather.Clear;
+            CurrentTime = TimeOfDay.Morning;
+            turnsToTimeChange = 4;  //takes 4 interaction turns to advance the time of day
         }
 
-        public void TickTurn()
+        public string? TickTurn()
         {
+            string? environmentMessage = UpdateTimeAndWeather();
+
             foreach(IInteractable local in Locals)
             {
                 local.TickInteractionCooldown();
@@ -22,16 +48,56 @@
                     actor.StateMachine.Update();
                 }
             }
+            return environmentMessage;
         }
 
         public bool Describe(Player player)
         {
             Display.Igm(Description);  //Describe the scene
-            TickTurn();  //bring the world alive
+            string? envMessage = TickTurn();  //bring the world alive
+            if (!string.IsNullOrEmpty(envMessage))
+            {
+                Display.Igm(envMessage);
+            }
             return InteractionHandler.InteractWith(Locals, player);
         }
 
-        //define a starting scene with a description and some npcs to interact with
+        private string? UpdateTimeAndWeather()
+        {
+            turnsToTimeChange--;
+            if(turnsToTimeChange <= 0)
+            {
+                //Advance time of day to the next phase, looping back to morning (0) after Night (3)
+                CurrentTime = (TimeOfDay)(((int)CurrentTime + 1) % 4);
+                turnsToTimeChange = 4;  //reset the counter for the next time phase
 
+                if(Random.Shared.Next(100) < 40)
+                {
+                    Array weatherValues = Enum.GetValues(typeof(Weather));
+                    Weather oldWeather = CurrentWeather;
+                    CurrentWeather = (Weather)weatherValues.GetValue(Random.Shared.Next(weatherValues.Length))!;
+                    if(oldWeather != CurrentWeather)
+                    {
+                        return GetWeatherChangeMessage(); //exit early so we dont spam both a time and weather message at the exact same time.
+                    }
+                }
+                return $"\nTime passes... it is now {CurrentTime.ToString().ToLower()}.";
+            }
+            return null;
+        }
+
+        private string GetWeatherChangeMessage()
+        {
+            return CurrentWeather switch
+            {
+                Weather.Clear => "\nThe sky clears up and a pleasant breeze blows through.",
+                Weather.Cloudy => "\nDark clouds gather overhead, blocking out the light.",
+                Weather.Raining => "\nA gentle rain begins to fall and the air is damp.",
+                Weather.Storming => "\nThunder crashes as a harsh storm begins!",
+                Weather.Foggy => "\nA thick fog rolls in, making it hard to see.",
+                Weather.Windy => "\nThe wind howls through the trees, this is not hat weather.",
+                _ => "\nThe weather seems to change."
+            };
+        }
     }
 }

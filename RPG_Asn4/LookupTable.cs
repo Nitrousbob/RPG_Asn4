@@ -22,8 +22,8 @@ namespace RPG_Asn4
             Add("ask", c.Ask);
             Add("talk", c.Talk);
             Add("pet", c.Pet);
-            Add("slap", c.Slap);
-            Add("hit", c.Slap);
+            Add("slap", c.Agitate);
+            Add("hit", c.Agitate);
             Add("look", c.Look);
             Add("help", c.Help);
             Add("exit", c.Exit);

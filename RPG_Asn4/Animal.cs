@@ -46,28 +46,25 @@
             StateMachine.Update();
         }
 
-        public void OnSlapped()
+        public string OnAgitate()
         {
-                Display.Action($"You slap {Name}");
-                Display.DarkAction($"{Name} looks at you with shock and anger.");
                 BlockInteraction(3);  //mad for 3 turns, you can't interact with them for 3 turns.
+                return $"{Name} looks at you with shock and anger.";
         }
 
-        public void OnLaughedAt()
+        public string OnLaughedAt()
         {
-            Display.Action($"You laugh at {Name}");
-            Display.DarkAction($"{Name} tilts its head, confused by the noise.");
+            return $"{Name} tilts its head, confused by the noise.";
         }
 
-        public void OnFlirtedWith()
+        public string OnFlirtedWith()
         {
-            Display.Action($"You try to flirt with {Name}");
-            Display.DarkAction($"{Name} ignores you completely.");
+            return $"{Name} ignores you completely.";
         }
 
-        public void OnFartedAt()
+        public string OnFartedAt()
         {
-            //nothing happens
+            return $"{Name} just stares at you, unfazed.";
         }
     }
 }
