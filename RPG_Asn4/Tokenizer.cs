@@ -11,15 +11,27 @@ namespace RPG_Asn4
             List<Token> list = new List<Token>();
 
             var parts = s.Split(" ");
+
+            //takes the first token a makes it a verb to lookup
             list.Add(new Token(TokenType.verb, parts[0]));
 
-            for (int i = 0; i < parts.Length; i++)
+            //this takes the remaining words and adds them to the list as either a subject or an object depending on what comes before it
+            for (int i = 1; i < parts.Length; i++)
             {
-                //verb, subject, object, preposition, indirect object
-                list.Add(new Token(TokenType.subject, parts[i]));
+                if (parts[i] == "to" || parts[i] == "with" || parts[i] == "about" || parts[i] == "at")
+                {
+                    list.Add(new Token(TokenType.preposition, parts[i]));
+                }
+                else if (i > 0 && (parts[i-1] == "to" || parts[i-1] == "with" || parts[i-1] == "about" || parts[i-1] == "at"))
+                {
+                    list.Add(new Token(TokenType.target, parts[i]));
+                }
+                else
+                {
+                    list.Add(new Token(TokenType.subject, parts[i]));
+                }
             }
-
-            return list.Count > 0 ? list : null;
+                return list.Count > 0 ? list : null;
         }
     }
 }

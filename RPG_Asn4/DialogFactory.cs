@@ -103,6 +103,15 @@ namespace RPG_Asn4
             }
 
             var ast = tokenizer.Tokenize(input);
+
+            if (ast != null)
+            {
+                foreach (Token token in ast)
+                {
+                    Console.WriteLine($"{token.Name}: {token.Value}");
+                }
+            }
+
             var verb = ast?.FirstOrDefault(x => x.Name == TokenType.verb);
             if (verb is not null)  
             {

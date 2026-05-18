@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-
-namespace RPG_Asn4
+﻿namespace RPG_Asn4
 {
     public static class TakeInput
     {
@@ -25,7 +20,7 @@ namespace RPG_Asn4
             //I added this if statement to allow for testing and coding in vs code, since Console.ReadKey doesn't
             //work well in that environment. It will just fallback to the confirmed method if input is
             //redirected.  I used chatGPT to help with this fix because i could not get the program to run.
-            if (Console.IsInputRedirected)  
+            if (Console.IsInputRedirected)
 
             {
                 return PromptIntConfirmed(prompt, validChoices);

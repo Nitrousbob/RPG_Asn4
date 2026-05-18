@@ -7,7 +7,9 @@ namespace RPG_Asn4
     public enum TokenType
     {
         verb,
-        subject
+        subject,
+        preposition,
+        target
     }
 
     public class Token
