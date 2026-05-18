@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Runtime.ConstrainedExecution;
-using System.Text;
-
 namespace RPG_Asn4
 {
     public static class HumanNpcFactory
@@ -12,7 +7,7 @@ namespace RPG_Asn4
         public static string RandomNpcName()
         {
             //in luei of authored bosses for now NPC names generated with ChatGpt.
-            String[] NpcTownsfolkName =  
+            String[] NpcTownsfolkName =
             {
                 "Old Man Bramble","Granny Mosswick","Farmer Thistletoe","Millie Fernwhistle","Barnaby Rootwell","Elara Greenbloom","Mayor Oakenford",
                 "Jasper Mudboots","Tilda Briarpatch","Finnick Leafturner","Dockmaster Gulliver","Pearl Tidewell","Old Salt Marrow","Captain Netterby",
@@ -20,7 +15,7 @@ namespace RPG_Asn4
                 "Old Mother Claypot","Merchant Vashir","Nima Sunveil","Farid Dustcloak","Zara Cactusflower","Jebidiah Drywell","Salma Emberglass",
                 "Omar Shadehand","Greta Snowmend","Harold Frostbeard","Inga Hearthwarm","Borin Icepatch","Elsa Woolwick","Old Nan Wintertoe","Torren Snowshoe",
                 "Mira Coldbrook","Yana Frostbell","Silas Chimneykin","Gearson Cogwright","Mira Sparkhand","Old Wrench Wilby","Professor Brasswick",
-                "Tilly Steamwhistle","Barnabus Bolt","Clara Copperpot","Edwin Geargrind","Nora Lampwick","Finch Tinkerbell"            
+                "Tilly Steamwhistle","Barnabus Bolt","Clara Copperpot","Edwin Geargrind","Nora Lampwick","Finch Tinkerbell"
             };
 
             int index = Random.Shared.Next(NpcTownsfolkName.Length);
@@ -33,7 +28,7 @@ namespace RPG_Asn4
             () => new Npc(RandomNpcName(), Random.Shared.Next(10, 15), RollHasEyes(90)),
         };
 
-        public static Npc GetStandardTier(int tier = 1)  
+        public static Npc GetStandardTier(int tier = 1)
         {
             int index = Random.Shared.Next(_tier1Townsfolk.Length);
             Npc npc = _tier1Townsfolk[index]();

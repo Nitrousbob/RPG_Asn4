@@ -93,7 +93,7 @@ namespace RPG_Asn4
 
         public void PlayGame()
         {
-            if (player == null)
+            if (player == null)  //quick check for a player
             {
                 Display.Error("You must create or load a character before you start.");
                 currentState = GameState.MainMenu;
@@ -102,22 +102,7 @@ namespace RPG_Asn4
 
             Display.Igm("\n--- Entering Game World ---");
 
-            //make a list to hold the nps in the scene
-            List<IInteractable> startNpcs = new List<IInteractable>();
-            
-            //Add a couple of npc's to the list
-            for (int i = 0; i < 2; i++)
-            {
-                startNpcs.Add(HumanNpcFactory.GetStandardTier(1));
-            }
-
-            startNpcs.Add(AnimalNpcFactory.GetStandardTier(1));  //add an animal npc to the starting scene for variety
-            
-            //Initialize the starting scene
-            CurrentScene = new Scene(
-                "\nYou find yourself in a small clearing surrounded by dense forest.",
-                startNpcs
-            );
+            CurrentScene = CreateStartingScene(); //create the starting scene and describe it
             
             bool inWorld = true;
             while (inWorld)
@@ -126,6 +111,27 @@ namespace RPG_Asn4
             }
 
             currentState = GameState.MainMenu;  //outside of inGame you are in the MainMenu
+        }
+
+        //CreateStartingScene returns a new Scene object, we may want to have this be more dynamic in the future, but for now it just creates a simple scene with a couple of NPCs in it.
+        private Scene CreateStartingScene()
+        {
+            //make a list to hold the NPCs in the scene
+            var startNpcs = new List<IInteractable>();
+
+            //Add a couple of NPCs to the list
+            for (int i = 0; i < 2; i++)
+            {
+                startNpcs.Add(HumanNpcFactory.GetStandardTier(1));
+            }
+
+            startNpcs.Add(AnimalNpcFactory.GetStandardTier(1));  //add an animal NPC to the starting scene for variety
+
+            //Initialize the starting scene
+            return new Scene(
+                "\nYou find yourself in a small clearing surrounded by dense forest.",
+                startNpcs
+            );
         }
 
         public void CreatePlayer()

@@ -28,12 +28,15 @@
         public string GetDescription()
         {
             return $"You see {Name}, a character in this world. But does {Name} have character?";
+            //Add a slight adjustment action here based on the weather or time of day.
+            //For example, if its raining, They may pull a hood up, (get a parasol ready) or if its dark , they may light a lantern, or if its sunny,
+            //they may put on sunglasses. Just a little flavor text to make the world feel more alive.
         }
-        
+
         public override void OnInteract(Player player)
         {
             if (!canInteract)
-            {
+            {   //maybe there are moods or other factors that could cause an NPC to not want to interact with the player, this is where that logic would go.
                 Display.Igm($"{Name} does not want to interact with you right now.");
                 return;
             }
@@ -51,9 +54,21 @@
         public string GetTalkResponse()
         {
             InteractionCount++;
-            if (InteractionCount < 5)
+            if (InteractionCount < 2)
             {
                 return "I came here to chew bubblegum and talk, and I'm all out of bubblegum.";
+            }
+            else if (InteractionCount >= 2 && InteractionCount < 3)
+            {
+                return "Oh, you want to talk? That's nice.";
+            }
+            else if (InteractionCount >= 3 && InteractionCount < 4)
+            {
+                return "You just keep talking, don't you?";
+            }
+            else if (InteractionCount >= 4 && InteractionCount < 5)
+            {
+                return "Nowadays everybody wants to talk, like they got something to say, but when they move their lips, it just a bunch of gibberish, players act like they forgot about Dre.";
             }
             else
             {
