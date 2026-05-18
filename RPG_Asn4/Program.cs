@@ -22,7 +22,7 @@
                         g.PlayGame();
                         break;
                     case 4:
-                        Display.Igm("\nExiting...");
+                        Display.Igm("Exiting...");
                         return;
                     default:
                         Display.Error("Invalid choice. Please try again.");

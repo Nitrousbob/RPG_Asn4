@@ -40,7 +40,7 @@ namespace RPG_Asn4
 
         public void Enter()
         {
-            Display.Igm($"\n{npc.Name} {npc.BusyStart}");
+            Display.Igm($"{npc.Name} {npc.BusyStart}");
         }
         public void Update()
         {
@@ -70,7 +70,7 @@ namespace RPG_Asn4
         public void Enter()
         {
             string greeting = DialogFactory.GetRandomGreeting(npc);
-            Display.Igm($"\n{npc.Name} says: '{greeting}'");
+            Display.Igm($"{npc.Name} says: '{greeting}'");
         }
 
         public void Update()

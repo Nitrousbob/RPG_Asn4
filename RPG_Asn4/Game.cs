@@ -61,7 +61,7 @@ namespace RPG_Asn4
                         break;
                 }
             }
-            Display.Igm("\nThanks for playing!");
+            Display.Igm("Thanks for playing!");
         }
 
         private void ShowMainMenu()
@@ -100,7 +100,7 @@ namespace RPG_Asn4
                 return;
             }
 
-            Display.Igm("\n--- Entering Game World ---");
+            Display.Igm("--- Entering Game World ---");
 
             CurrentScene = CreateStartingScene(); //create the starting scene and describe it
             
@@ -129,7 +129,7 @@ namespace RPG_Asn4
 
             //Initialize the starting scene
             return new Scene(
-                "\nYou find yourself in a small clearing surrounded by dense forest.",
+                "You find yourself in a small clearing surrounded by dense forest.",
                 startNpcs
             );
         }
@@ -165,7 +165,7 @@ namespace RPG_Asn4
                 return;
             }
 
-            Display.Igm($"\n{files.Length} available saved players: ");
+            Display.Igm($"{files.Length} available saved players: ");
 
             for (int i = 0; i < files.Length; i++)
             {
@@ -184,13 +184,13 @@ namespace RPG_Asn4
                     if (loadedPlayer != null)
                     {
                         player = loadedPlayer;
-                        Display.Igm($"\nPlayer loaded successfully");
+                        Display.Igm($"Player loaded successfully");
                         Display.ShowPlayerInfo(player); //This shows the loaded player's information after successful loading.
                     }
                 }
                 catch (Exception e)
                 {
-                    Display.Error($"\nError loading player data: {e.Message}");
+                    Display.Error($"Error loading player data: {e.Message}");
                 }
 
         }

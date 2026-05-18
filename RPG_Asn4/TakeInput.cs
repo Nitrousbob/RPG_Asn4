@@ -15,7 +15,7 @@ namespace RPG_Asn4
                 {
                     return choice;
                 }
-                Console.Write("Invalid input. Please enter a number: ");
+                Console.WriteLine("Invalid input. Please enter a number: ");
             }
         }
 
@@ -39,14 +39,14 @@ namespace RPG_Asn4
 
             do
             {
-                Console.Write(prompt);
+                Console.WriteLine(prompt);
                 keyInfo = Console.ReadKey(true); //true hides the key press then we check if its valid
                 if (int.TryParse(keyInfo.KeyChar.ToString(), out choice))
                 {
                     if (validChoices.Contains(choice))
                     {
                         isValid = true;
-                        Console.Write(keyInfo.KeyChar);  //display keypress after we know it was valid
+                        Console.WriteLine(keyInfo.KeyChar);  //display keypress after we know it was valid
                     }
                 }
                 if (!isValid)
@@ -72,7 +72,7 @@ namespace RPG_Asn4
         {
             while (true)
             {
-                Console.Write(prompt + " ");
+                Console.WriteLine(prompt + " ");
 
                 if (int.TryParse(Console.ReadLine(), out int value))
                 {
@@ -83,13 +83,13 @@ namespace RPG_Asn4
                     else
                     {
                         string validOptions = string.Join(", ", validChoices);
-                        Display.Error($"\nPlease select an option like: {validOptions}");
+                        Display.Error($"Please select an option like: {validOptions}");
                     }
                 }
                 else
                 {
                     //displays mostly when empty input, or space
-                    Display.Error("\nUnavailable choice. Try choosing better.");
+                    Display.Error("Unavailable choice. Try choosing better.");
                 }
             }
         }
@@ -98,7 +98,7 @@ namespace RPG_Asn4
         {
             while (true)
             {
-                Console.Write(prompt);
+                Console.WriteLine(prompt);
                 if (int.TryParse(Console.ReadLine(), out int value))
                 {
                     if (value >= min && value <= max)
@@ -112,7 +112,7 @@ namespace RPG_Asn4
 
         public static string GetPlayerName()
         {
-            Display.Igm("\nEnter your character's name: ");
+            Display.Igm("Enter your character's name: ");
             return Console.ReadLine() ?? "Unnamed Hero";
         }
 

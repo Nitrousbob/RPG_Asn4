@@ -81,7 +81,7 @@
                         return GetWeatherChangeMessage(); //exit early so we dont spam both a time and weather message at the exact same time.
                     }
                 }
-                return $"\nTime passes... it is now {CurrentTime.ToString().ToLower()}.";
+                return $"Time passes... it is now {CurrentTime.ToString().ToLower()}.";
             }
             return null;
         }
@@ -90,13 +90,13 @@
         {
             return CurrentWeather switch
             {
-                Weather.Clear => "\nThe sky clears up and a pleasant breeze blows through.",
-                Weather.Cloudy => "\nDark clouds gather overhead, blocking out the light.",
-                Weather.Raining => "\nA gentle rain begins to fall and the air is damp.",
-                Weather.Storming => "\nThunder crashes as a harsh storm begins!",
-                Weather.Foggy => "\nA thick fog rolls in, making it hard to see.",
-                Weather.Windy => "\nThe wind howls through the trees, this is not hat weather.",
-                _ => "\nThe weather seems to change."
+                Weather.Clear => "The sky clears up and a pleasant breeze blows through.",
+                Weather.Cloudy => "Dark clouds gather overhead, blocking out the light.",
+                Weather.Raining => "A gentle rain begins to fall and the air is damp.",
+                Weather.Storming => "Thunder crashes as a harsh storm begins!",
+                Weather.Foggy => "A thick fog rolls in, making it hard to see.",
+                Weather.Windy => "The wind howls through the trees, this is not hat weather.",
+                _ => "The weather seems to change."
             };
         }
     }

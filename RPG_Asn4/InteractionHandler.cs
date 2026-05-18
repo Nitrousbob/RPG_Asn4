@@ -32,12 +32,12 @@
 
             if (choice == exitOption)
             {
-                Display.Igm("\nYou step back from the interaction.");
+                Display.Igm("You step back from the interaction.");
                 return false;
             }
             else if (choice == waitOption)
             {
-                Display.Igm("\nYou stand quietly, watching the area.");
+                Display.Igm("You stand quietly, watching the area.");
                 return true;
             }
             else if (choice > 0 && choice <= targets.Count)
